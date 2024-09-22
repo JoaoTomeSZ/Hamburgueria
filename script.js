@@ -6,9 +6,12 @@ const cartTotal = document.getElementById("cart-total")
 const checkoutBtn = document.getElementById("checkout-btn")
 const closeModalBtn = document.getElementById("close-modal")
 const cartCounter = document.getElementById("cart-count")
+const nameInput = document.getElementById("name")
+const nameWarn = document.getElementById("name-warn")
 const addressInput = document.getElementById("address")
 const addressWarn = document.getElementById("address-warn")
 const addBtn = document.getElementById("add-btn")
+const deleteBtn = document.getElementById("delete-btn")
 let cart = [];
 
 cartbtn.addEventListener("click", function(){
@@ -77,7 +80,7 @@ function updateCartModal(){
             <button class="remove-btn font-bold" data-name="${item.name}">-</button>
         </div>
         <div>
-        <p>( ${item.quantity} )</p>
+        <p> ${item.quantity} </p>
         </div>
         <div class="bg-gray-900 px-2 rounded text-white">
             <button class="add-btn font-bold" data-name="${item.name}">+</button>
@@ -135,4 +138,111 @@ function plusItem(name){
         return
     }
     updateCartModal()
+}
+
+addressInput.addEventListener("input", function(event){
+    let inputValue = event.target.value;
+    if(inputValue !== ""){
+        addressInput.classList.remove("border-red-500")
+        addressWarn.classList.add("hidden")
+    }
+    
+})
+
+nameInput.addEventListener("input", function(event){
+    let inputValue = event.target.value;
+    if(inputValue !== ""){
+        nameInput.classList.remove("border-red-500")
+        nameWarn.classList.add("hidden")
+    }
+    
+})
+
+deleteBtn.addEventListener("click", function(event){
+    let parentButton = event.target.closest(".delete-btn")
+    if(parentButton){
+        cart.length = 0;
+        nameInput.value = ""
+        addressInput.value = ""
+    }
+    updateCartModal()
+})
+
+checkoutBtn.addEventListener("click", function(){
+    const isOpen = checkRestaurantOpen();
+
+    if(!isOpen){
+        Toastify({
+            text: "O restaurante está fechado!",
+            duration: 3000,
+            destination: "https://github.com/apvarun/toastify-js",
+            newWindow: true,
+            close: true,
+            gravity: "top", // `top` or `bottom`
+            position: "left", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+            background: "linear-gradient(to right,red, red, red)",
+            }
+        }).showToast()
+        return;
+    }
+    
+    if(cart.length === 0) return;
+        if(addressInput.value === ""){
+            addressWarn.classList.remove("hidden")
+            addressInput.classList.add("border-red-500")
+            
+        }
+        if(nameInput.value === ""){
+            nameWarn.classList.remove("hidden")
+            nameInput.classList.add("border-red-500")
+            return;
+        }
+
+        const cartItemsMap = cart.map((item) => {
+            return(
+                `*${item.name}* \n *Quantidade:* ${item.quantity} \n *Preço:* R$${item.price}  \n`
+            )
+        }).join("")
+        const message = encodeURIComponent(cartItemsMap)
+        const phone = "11970117300"
+
+        window.open(`https://wa.me/${phone}?text=${message} Nome: ${nameInput.value} \n Endereço: ${addressInput.value}`, "_blank")
+
+        cart.length = 0;
+        nameInput.value = ""
+        addressInput.value = ""
+        cartModal.style.display = "none";
+        updateCartModal()
+    })
+
+function checkRestaurantOpen(){
+    const data = new Date();
+    const hora = data.getHours();
+    return hora >= 18 && hora < 22;
+}
+
+const spanItem = document.getElementById("date-span")
+const isOpen = checkRestaurantOpen();
+
+if(isOpen){
+    spanItem.classList.remove("bg-red-500");
+    spanItem.classList.add("bg-green-600")
+    
+}else{
+    spanItem.classList.remove("bg-green-600");
+    spanItem.classList.add("bg-red-500")
+    const ClosedSpan = document.createElement("div");
+    ClosedSpan.classList.add("flex", "justify-between", "mb-4", "flex-col")
+
+
+
+    ClosedSpan.innerHTML = `
+    <div class="flex items-center justify-center text-white">
+        <div>
+        <p class="font-medium">Fechado</p>
+        </div>
+        `
+    spanItem.appendChild(ClosedSpan)
 }

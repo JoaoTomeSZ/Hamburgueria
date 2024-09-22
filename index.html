@@ -9,10 +9,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,900&display=swap" rel="stylesheet">
     <!--CSS-->
-    <link rel="stylesheet" href="./styles/output.css"
-    <!--ICONS-->
+    <link rel="stylesheet" href="./styles/output.css">
+    <!--icon-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!--JAVASCRIPT-->
     <script src="./script.js" defer></script>
+    <!--ALERT TOASTIFY-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js" defer></script>
 </head>
 <body>
     <!--INICIO   HEADER -->
@@ -20,12 +24,12 @@
         <div class="w-full h-full flex flex-col justify-center items-center">
             <img 
             src="./assets/hamb-1.png" 
-            alt="Logo Dev-Burguer"
-            class="w-32 h-32 rounded-full shadow-lg hover:scale-110"
+            alt="Logo Like-Burguer"
+            class="w-32 h-32 rounded-full shadow-black hover:scale-110"
             >
-        <h1 class="text-4xl mt-4 mb-2 text-white font-bold">Dev Burguer</h1>
+        <h1 class="text-4xl mt-4 mb-2 text-white font-bold">Like Burguer</h1>
         <span class="text-white font-medium">Rua dev 10, Dias D'Ávila - BA</span>
-        <div class="bg-green-600 px-4 py-1 rounded-lg mt-5">
+        <div class="bg-green-600 px-4 rounded-lg mt-5 items-center justify-center" id="date-span">
             <span class="text-white font-medium">Segunda à domingo - 18:00 as 22:00</span>
         </div>
     </div>   
@@ -162,7 +166,7 @@
             <div class="flex items-center gap-2 justify-between mt-3">
             <p class="font-bold text-lg">R$25.90</p>
                     <button class="bg-gray-900 px-5 rounded add-to-cart-btn hover:bg-red-500 duration-300"
-                    data-name="Traditional8 Burguer"
+                    data-name="Traditional Burguer"
                     data-price="25.90"
                     >
                         <i class="fa fa-cart-plus text-lg text-white"></i>
@@ -217,7 +221,7 @@
     <!-- FIM PRODUTO ITEM 8-->
         </main>
 
-        <div class="mx-auto max-w-7xl px-2 my-2">
+        <div class="mx-auto max-w-7xl px-2 mb-6 flex justify-center">
             <h2 class="font-bold text-3xl">
                 Bebidas
             </h2>
@@ -276,9 +280,17 @@
         <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px]">
             <h2 class="text-center font-bold text-2xl mb-2">Meu carrinho</h2>
 
-            <div id="cart-items" class="flex justify-between mb-2 flex-col"></div>
+            <div id="cart-items" class="flex justify-between mb-1 flex-col"></div>
 
             <p class="font-bold">Total: <span id="cart-total">0.00</span></p>
+            <p class="font-bold mt-4">Nome:</p>
+            <input 
+            type="text"
+            placeholder="Digite seu nome..."
+            id="name"
+            class="w-full border-2 p-1 rounded my-1"
+            >
+            <p class="text-red-500 hidden" id="name-warn">Digite seu nome</p>
 
             <p class="font-bold mt-4">Endereço de entrega:</p>
             <input 
@@ -291,9 +303,14 @@
 
             <div class="flex items-center justify-between mt-4 w-full">
                 <button id="close-modal">Fechar</button>
+                <div>
+                    <button id="delete-btn" class="bg-red-500 text-white px-5 md:px-1 py-1 rounded mr-1 delete-btn"><i class="fa fa-trash"></i></button>                    
+                </button>
                 <button id="checkout-btn" class="bg-green-500 text-white px-4 py-1 rounded">
                     Finalizar pedido
                 </button>
+                </div>
+                
             </div>
         </div>
     </div>
