@@ -202,7 +202,7 @@ checkoutBtn.addEventListener("click", function(){
 
         const cartItemsMap = cart.map((item) => {
             return(
-                `*${item.name}* \n *Quantidade:* ${item.quantity} \n *Preço:* R$${item.price}  \n`
+                `*${item.name}* \n *Quantidade:* ${item.quantity} \n *Preço:* R$${item.price}  \n\n`
             )
         }).join("")
         const message = encodeURIComponent(cartItemsMap)
